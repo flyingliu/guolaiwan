@@ -1,0 +1,7 @@
+html,body { height: 100%; overflow: hidden; }
+body { padding-top: 50px;font:14px/1.8 arial; text-align: center;}
+.tit { font:12em/1.2 "经典繁颜体"; color:#000; }
+.art {height: 100%;width: 100%;overflow: hidden;}
+.art dl {height: 100%;width: 100%;overflow: hidden;}
+.art dl dd { float: left;height: 100%;width: 100%;}
+.art dl dd:first-child { background:#f4f7ff;}
