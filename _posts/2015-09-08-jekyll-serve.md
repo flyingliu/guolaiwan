@@ -3,6 +3,23 @@ layout: default
 title: jekyll常用命令
 ---
 
-### jekyll常用命令
+### jekyll中文文档
 
-> 这里有你永远不知道的一种方法
+[jekyll中文文档](http://jekyll.bootcss.com/docs/usage/)
+
+### 基本用法
+
+Jekyll 同时也集成了一个开发用的服务器，可以让你使用浏览器在本地进行预览。
+
+<pre>
+jekyll serve
+# => 一个开发服务器将会运行在 http://localhost:4000/
+
+$ jekyll serve --detach
+# => 功能和`jekyll serve`命令相同，但是会脱离终端在后台运行。
+#    如果你想关闭服务器，可以使用`kill -9 1234`命令，"1234" 是进程号（PID）。
+#    如果你找不到进程号，那么就用`ps aux | grep jekyll`命令来查看，然后关闭服务器。[更多](http://unixhelp.ed.ac.uk/shell/jobz5.html).
+
+$ jekyll serve --watch
+# => 和`jekyll serve`相同，但是会查看变更并且自动再生成。
+</pre>
