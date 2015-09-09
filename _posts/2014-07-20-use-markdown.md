@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Markdown常用格式
+categories: [test, sample, 方法论]
 ---
 
 ### 标题
@@ -90,7 +91,7 @@ Markdown 的粗体和斜体也非常简单，用两个 * 包含一段文本就�
 
 ### 转义字符
 
-用 "\" 表示转义！同js相同！
+用 "\\" 表示转义！同js相同！
 
 
 

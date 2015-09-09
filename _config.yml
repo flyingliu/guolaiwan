@@ -1,1 +1,4 @@
 markdown: kramdown
+permalink: /:year/:month/:day/:title
+sass:
+    style: :compressed
