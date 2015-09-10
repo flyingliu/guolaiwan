@@ -6,3 +6,5 @@ body { padding-top: 50px;font:14px/1.8 arial;}
 .article table {width:100%;}
 .article table th {border:1px solid #ccc;}
 .article table td {border:1px solid #ccc;}
+
+.ms-controller{visibility: hidden;}

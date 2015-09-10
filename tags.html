@@ -1,32 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>  
-</head>
-<body>
-<ul>
-{% for member in site.data.members %}
-  <li>
-    <a href="https://github.com/{{ member.github }}">
-      {{ member.name }}
-    </a>
-  </li>
-{% endfor %}
-</ul>
+---
+layout: default
+title: 标签
+---
+<h3>标签：</h3>
 
+<div ms-controller="pages">
 
+  <hr>
+
+  <ul>
+
+    <li ms-repeat-el='items'>
+      <a ms-href="{?el.url?}">{?el.title?}</a>
+      <span>{?el.date?}</span>
+    </li>
+
+  </ul>
+</div>
+<script src="/src/lib/avalon.min.js"></script>
 <script>
-// var dataStr = '{ {% for tag in site.tags %}{% if tag[0] != site.tags.first[0] %},{% endif %}"{{ tag[0] }}":[{% for post in tag[1] %}{% if post != tag[1].first %},{% endif %}{"url":"{{post.url}}", "title":"{{post.title}}", "date":"{{post.date | date:"%d/%m/%Y"}}"}{% endfor %}]{% endfor %} }',
-//     data = JSON.parse(dataStr),
-//     curTag = $.query.get("tag"),
-//     archieves = data[curTag];
+avalon.config({debug:false,interpolate:['{?', '?}']})
 
-//     console.log(data);
+require(["domReady!", "mmState"], function() {
 
+  function GetQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+  }
+
+  var dataStr = '{ {% for tag in site.tags %}{% if tag[0] != site.tags.first[0] %},{% endif %}"{{ tag[0] }}":[{% for post in tag[1] %}{% if post != tag[1].first %},{% endif %}{"url":"{{post.url}}", "title":"{{post.title}}", "date":"{{post.date | date:"%d/%m/%Y"}}"}{% endfor %}]{% endfor %} }'
+  var data = JSON.parse(dataStr);
+  var curTag = GetQueryString("tag");
+  var archieves = data[curTag];
+
+  var pages = avalon.define({
+    $id:'pages',
+    items: archieves,
+  })
+  avalon.history.start({
+      basepath: "/avalon"
+  })
+  avalon.scan()
+});
 
 </script>
-  
-</body>
-</html>

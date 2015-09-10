@@ -1,8 +1,7 @@
 ---
 layout: default
-title: 你好，世界
-categories: [书法]
-tags: [github, jekyll]
+title: 谢赫六法
+tags: [shufa]
 ---
 
 # 谢赫六法

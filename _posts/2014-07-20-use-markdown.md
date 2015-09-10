@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Markdown常用格式
-categories: [test, sample, 方法论]
+categories: []
+tags: [github]
 ---
 
 ### 标题
