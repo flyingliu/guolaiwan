@@ -3,6 +3,11 @@ layout: default
 title: 分类
 ---
 <h3>分类：</h3>
+<div class="cates">
+    {% for category in site.categories %}
+    <a href="/category.html?cat={{ category[0] }}">{{ category | first }}</a>
+    {% endfor %}
+</div>
 
 <div ms-controller="pages">
 

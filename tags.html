@@ -8,6 +8,12 @@ title: 标签
 
   <hr>
 
+  <div id="tags">
+    {% for tag in site.tags %}
+    <a href="/tags.html?tag={{ tag[0] }}"> {{ tag[0] }}</a>
+    {% endfor %}
+  </div>
+
   <ul>
 
     <li ms-repeat-el='items'>

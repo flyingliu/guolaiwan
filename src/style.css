@@ -1,10 +1,16 @@
 body { padding-top: 50px;font:14px/1.8 arial;}
 
-.starter-template {padding: 40px 15px;text-align: center;}
-.starter-template ul { text-align:left;}
-.starter-template ul li { border-bottom:1px solid #ccc;padding:10px 0;}
+.index {padding: 40px 15px;}
+.index ul { text-align:left; padding:10px 0; list-style:none;}
+.index ul li span  { color:#ccc;}
+.index ul li a  { position: relative;;padding:0 0 0 10px;}
+.index ul li a:before {content:'»';margin-left:-5px; position: absolute;left:5px;}
+.index h3 {font:bold 18px/2 arial; margin:0;}
+.index h3 a { color:#333;}
+
+.article h1 {font:bold 20px/2 arial; border-bottom:1px solid #ddd;margin-bottom:20px;}
 .article table {width:100%;}
 .article table th {border:1px solid #ccc;}
 .article table td {border:1px solid #ccc;}
 
-.ms-controller{visibility: hidden;}
+.ms-controller { visibility: hidden;}

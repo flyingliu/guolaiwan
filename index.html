@@ -4,25 +4,27 @@ title: 我的Blog
 ---
 
 
-  <div class="starter-template">
+  <div class="index">
 
     <h3>最新文章</h3>
     <ul>
     {% for post in site.posts %}
-    <li>{{ post.date | date:"%d/%m/%Y"}} <a href="{{ post.url }}">{{ post.title }}</a></li>
+    <li><span>{{ post.date | date:"%d/%m/%Y"}}</span> <a href="{{ post.url }}">{{ post.title }}</a></li>
     {% endfor %}
     </ul>
 
     <hr>
     {% for category in site.categories %}
-    <h5 class="text-left"><a href="/category.html?cat={{ category[0] }}">{{ category | first }}</a> <small>{{ category | last | size }}</small></h5>
+    <h3><a href="/category.html?cat={{ category[0] }}">{{ category | first }}</a> <small class="badge">{{ category | last | size }}</small></h3>
     
     <ul class="arc-list">
         {% for post in category.last %}
-            <li>{{ post.date | date:"%d/%m/%Y"}}<a href="{{ post.url }}">{{ post.title }}</a></li>
+            <li><span>{{ post.date | date:"%d/%m/%Y"}}</span><a href="{{ post.url }}">{{ post.title }}</a></li>
         {% endfor %}
     </ul>
     {% endfor %}
+
+    <h3>Tags</h3>
 
     {% for tag in site.tags %}
     <a href="/tags.html?tag={{ tag[0] }}"> {{ tag[0] }}</a>
