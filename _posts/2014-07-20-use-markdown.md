@@ -94,5 +94,18 @@ Markdown 的粗体和斜体也非常简单，用两个 * 包含一段文本就�
 
 用 "\\" 表示转义！同js相同！
 
+### 程序代码
 
+Markdown 会把每行前面空四格的文本转换为代码块。
+如果是GFM的话， 也支持这种语法，同时，还支持围栏式代码块即代码块包裹在 ``` 之间。
+
+    function fancyAlert(arg) {
+      if(arg) {
+        $.facebox({div:'#foo'})
+      }
+    }
+
+    <div>
+      this is a dov
+    </div>
 

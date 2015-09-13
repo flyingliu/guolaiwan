@@ -1,4 +1,5 @@
 markdown: kramdown
 permalink: /:year/:month/:day/:title
+highlighter: pygments
 sass:
-    style: :compressed
+  style: :compressed
