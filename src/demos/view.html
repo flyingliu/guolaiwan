@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>hello-backbonejs</title>
+</head>
+<body>
+  <script src="/src/lib/jquery.js"></script>
+  <script src="/src/lib/json2.js"></script>
+  <script src="/src/lib/underscore.js"></script>
+  <script src="/src/lib/backbone-min.js"></script>
+  <div id="body"></div>
+    <script type="text/template" id="hello-template">
+        <div>
+            <h3 id="hello">${message}</h3>
+            <button id="toggle">Toggle</button>
+        </div>
+    </script>
+
+
+  <script>
+
+  // var TestView = Backbone.View.extend({  //  创建一个view，其实就是一个HTML的DOM节点
+  //     initialize: function() {
+  //         this.render();
+  //     },
+  //     render: function() {  // 渲染方法
+  //         this.$el.html('Hello World');  //  this.el就是HTML节点，通过jQuery的html方法填充内容
+  //         return this;
+  //     }
+  // });
+
+  $(function () {
+
+    _.templateSettings = {
+       interpolate : /\$\{(.+?)\}/g
+    };
+
+    var v = new TestView({el: $('#body')});  //  以目标节点（一个 <div id="body" />）为el参数，创建一个view的实例，render函数将会被自动调用并将渲染结果填充到el中
+    //v.render(); // 如果没在 initialize 里调用 render 的话，就需要在这里调用一次
+  });
+
+
+    // var TestView = Backbone.View.extend({
+    //     events: {
+    //         'click button#toggle' : 'toggle' //  响应toggle button的click事件
+    //     },
+    //     initialize: function() {
+    //         this.render();
+    //     },
+    //     render: function() {
+    //         this.$el.html('<p id="hello">Hello World</p><button id="toggle">Toggle</button>');  //  增加一个toggle button
+    //         return this;
+    //     },
+    //     toggle: function() {
+    //         $("#hello").toggle();  //  用jQuery的toggle方法切换显示
+    //         return this;
+    //     }
+    // });
+
+
+
+  var TestView = Backbone.View.extend({
+    template: null,  //  把模板直接放这里有时也可以，但有时又会出错，还不知道是什么原因
+    events: {
+        'click button#toggle' : 'toggle'
+    },
+    initialize: function() {
+        this.template = _.template($("#hello-template").html());  //  模板放这里一般没问题
+        this.render();
+    },
+    render: function() {
+        this.$el.html(this.template({message: "hello world!"}));  //  渲染模板
+        return this;
+    },
+    toggle: function() {
+        this.$("#hello").toggle();
+        return this;
+    }
+  });
+
+
+	</script>
+</body>
+</html>
