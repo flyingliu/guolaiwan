@@ -105,3 +105,154 @@ Model.extend
     console.log(child.get("name"));  // 子类继承父类属性
 
 extend会正确的设置原型链，所以可以通过extend实现继承。上面的代码就是创建父类User，然后子类ChildUser继承子父类。子类会继承父类的属性、方法
+
+Model.initialize
+
+    var User = Backbone.Model.extend({
+      defaults : {
+        name : 'tom'  // 默认的名字
+      },
+      initialize : function(){  //当model创建的时候，调用
+        console.log("initialize");
+        this.on('change',function(){  // 当数据发生变化的时候触发
+          console.log("此时我的名字是："+this.get("name"));
+        });
+      }
+    });
+    var tom = new User;
+    tom.set('name','jack'); // 修改模型的数据，会被change检测到
+
+如果指定了initialize方法，会在创建实例对象之后调用。当修改了模型数据，会触发自定义事件。
+
+    var User = Backbone.Model.extend({
+      defaults : {
+        name : 'tom',   // 默认的名字
+        age : 10
+      },
+      initialize : function(){  //当model创建的时候，调用
+        console.log("initialize");  
+        this.on('change:name',function(){   // 只检测name的变化
+          console.log("此时我的名字是："+this.get("name"));
+        });
+      }
+    });
+    var tom = new User;
+    tom.set('name','jack'); // 修改模型的数据，会被change检测到
+    tom.set('age','20');// 修改年龄不会被change检测
+
+如果只想检测某个属性的变化，可以通过添加命名空间的方式区别开事件。
+
+listenTo、View initialize
+
+    $(function(){
+      var User = Backbone.Model.extend({
+        defaults : {
+          name : 'tom'
+        }
+      });
+      var View = Backbone.View.extend({
+        initialize : function(){
+          console.log("initialize");
+          this.listenTo( this.model , 'change' , this.show );  // 当与这个view绑定的model数据发生变化的时候，调用show方法
+        },
+        show : function(model){ // 向页面中输出信息
+          $('body').append( '<div>'+ this.model.get('name')+ '</br>也可以通过参数调用</br>' + model.get('name') +'</div>' );
+        }
+      });
+      var tom = new User;
+      var view = new View({model:tom});    // 创建view实体
+      setTimeout(function(){
+        tom.set('name','jack');  // 修改数据
+      }, 1000);    // 一秒后修改数据，触发show
+    });
+
+listenTo允许一个对象监听另一个对象的事件，上面的代码就是让view监听model的change事件。
+
+sync、Model.save()
+
+    Backbone.sync = function(method, model) {
+      console.log(method + ": " + JSON.stringify(model));
+      model.set('id', 1);   // 模型的特殊属性
+    };
+    var Book = Backbone.Model.extend({
+      defaults:{
+        title: "The Rough Riders",
+        author: "Theodore Roosevelt"
+      }
+    });
+    var b = new Book;
+    b.save();    // create: {"title":"The Rough Riders","author":"Theodore Roosevelt"}
+    b.save({author: "Teddy"}); // update: {"title":"The Rough Riders","author":"Teddy","id":1}
+
+调用模型的save方法，就是委托Backbone.sync对数据进行持久化处理（保存到数据库），如果验证成功返回jqXHR，否则返回false。sync默认情况下是使用的是jQuery.ajax，可以通过重写sync来使用其他方式进行持久化处理如WebSockets,XML,或者Local Storage。上面的代码就是重写Backbone.sync的过程。第一次save的时候发送的create请求，第二次save的时候发送的是update请求。Backbone是如何区分第一次请求还是第二次请求的呢？是根据通过model.isNew这个方法进行判断的。如果模型没有id属性，就是表示模型是新模型可以通过下面的代码测试
+
+    Backbone.sync = function(method, model) {
+      console.log(method + ": " + JSON.stringify(model));
+      console.log(model.isNew());   // 此时不存在id属性，所以是true
+      model.set('id', 1);   // 模型的特殊属性
+      console.log(model.isNew()); // 此时存在id属性，所以是false
+    };
+
+在 Model.id文档中指出，如果通过set设置了model的id，就会将这个id拷贝到模型上，作为model的直接属性。在下图中可以发现通过Model.set('id',1)，给attributes中添加了id属性，也直接给model添加了id属性。
+
+
+但是相反的，如果通过model.id=1的方式直接给model添加id属性，是不会拷贝到attributes中的。如果只是给model直接添加了id，通过Model.isNew返回的一直都会是true。
+
+    Backbone.sync = function(method, model) {
+      console.log(method + ": " + JSON.stringify(model));
+      console.log(model.isNew());   // 返回true
+      model.id=1;   // 给model直接添加id属性
+      console.log(model.isNew()); // 返回true
+    };
+
+
+View和Events
+
+    var BodyView = Backbone.View.extend({
+      el : $('body'), // 如果没有指定el，el就会是个空div
+      events : {
+        'click input' : 'sayHello', // 点击input的时候调用sayHello方法
+        'mouseover li' : 'moveLi'// 鼠标悬浮li标签的时候调用moveLi方法
+      },
+      sayHello : function(){
+        console.log("Hello");
+      },
+      moveLi : function(){
+        console.log("mouseover li");
+      }
+    });
+    var view = new BodyView;
+
+如果设置了tagName、className、id、attributes属性（为视图知道根元素），那么view.el就会被创建，都在view.el就是个空的div。Backbone.events可以写成对象的形式，给视图绑定一组自定义事件。
+
+template
+
+    var Name = Backbone.Model.extend({
+      defaults : {
+        name : 'tom'
+      }
+    });
+    var NameView = Backbone.View.extend({
+      initialize : function(){
+        this.listenTo( this.model , 'change' , this.showName );
+      },
+      showName : function(model){
+        // $('body').append( "<div>" + model.get("name") + "</div>" );    // 不使用template的时候html代码与js写在一起
+        $('body').append( this.template(this.model.toJSON()) );
+        // 使用模版之后，html代码与js代码相分离
+      },
+      template: _.template($('#name').html())
+      // _.template中传入需要编译的模版
+      // 返回的结果就是编译后的html代码
+      // 最后在showName中调用，将编译后的html显示到body中
+    });
+    var name = new Name;
+    var nameView = new NameView({model:name});
+    name.set('name','jack');
+    <script type="text/template" id="name">
+      <% for (var i=0;i<5;i++) { %>
+        <div><%= name %></div>
+      <% } %>
+    </script>
+
+使用js模版不仅可以将html代码和js代码分离，提高可读性，也能提高开发效率。backbone.js使用的underscore.js中的template

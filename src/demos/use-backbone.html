@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>使用backbone</title>
-  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/underscore.js/1.8.3/underscore-min.js"></script>
-  <script src="//cdn.bootcss.com/json2/20150503/json2.min.js"></script>
-  <script src="//cdn.bootcss.com/backbone.js/1.2.3/backbone.js"></script>
-
+  <script src="/src/lib/jquery.js"></script>
+  <script src="/src/lib/json2.js"></script>
+  <script src="/src/lib/underscore.js"></script>
+  <script src="/src/lib/backbone-min.js"></script>
 </head>
 <body>
 
@@ -58,6 +57,48 @@
     child.sayHello();    // 子类继承父类sayHello()方法
     child.sayChild();    // 子类自己的方法
     console.log(child.get("name"));  // 子类继承父类属性
+
+
+    console.log('------------------------')
+    var User = Backbone.Model.extend({
+      defaults : {
+        name : 'tom'  // 默认的名字
+      },
+      initialize : function(){  //当model创建的时候，调用
+        console.log("initialize",this.get('name'));
+        this.on('change',function(){  // 当数据发生变化的时候触发
+          console.log("此时我的名字是："+this.get("name"));
+        });
+      }
+    });
+    var tom = new User;
+    setTimeout(function(){
+      tom.set('name','jack'); // 修改模型的数据，会被change检测到
+    },1000);
+
+    console.log('------------------------')
+    var Usera = Backbone.Model.extend({
+      defaults : {
+        namea : 'toma',   // 默认的名字
+        age : 10
+      },
+      initialize : function(){  //当model创建的时候，调用
+        console.log("initialize");
+        this.on('change:namea',function(){   // 只检测name的变化
+          console.log("此时我的名字是："+this.get("namea"));
+        });
+      }
+    });
+    var toma = new Usera;
+    toma.set('namea','flying'); // 修改模型的数据，会被change检测到
+    toma.set('age','20');// 修改年龄不会被change检测
+
+
+
+
+
 </script>
+
+
 </body>
 </html>

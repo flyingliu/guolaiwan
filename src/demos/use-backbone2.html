@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用backbone</title>
+  <script src="/src/lib/jquery.js"></script>
+  <script src="/src/lib/json2.js"></script>
+  <script src="/src/lib/underscore.js"></script>
+  <script src="/src/lib/backbone-min.js"></script>
+</head>
+<body>
+
+<h1>使用backbone</h1>
+
+<input type="submit" value="this is a button">
+
+<ul>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, aspernatur.</li>
+
+</ul>
+
+<script type="text/template" id="name">
+  <% for (var i=0;i<5;i++) { %>
+    <div><%= name + i %></div>
+  <% } %>
+</script>
+
+<script>
+$(function(){
+
+  var Name = Backbone.Model.extend({
+    defaults : {
+      name : 'tom'
+    }
+  });
+  var NameView = Backbone.View.extend({
+    initialize : function(){
+      this.listenTo( this.model , 'change' , this.showName );
+    },
+    showName : function(model){
+      // $('body').append( "<div>" + model.get("name") + "</div>" );
+      // 不使用template的时候html代码与js写在一起
+      $('body').append( this.template(this.model.toJSON()) ); 
+      // 使用模版之后，html代码与js代码相分离
+    },
+    template: _.template($('#name').html())
+    // _.template中传入需要编译的模版
+    // 返回的结果就是编译后的html代码
+    // 最后在showName中调用，将编译后的html显示到body中
+  });
+
+  var name = new Name;
+  var nameView = new NameView({model:name});
+  name.set('name','jack');
+
+});
+
+</script>
+
+
+</body>
+</html>

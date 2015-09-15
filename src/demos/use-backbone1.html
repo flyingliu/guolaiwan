@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用backbone</title>
+  <script src="/src/lib/jquery.js"></script>
+  <script src="/src/lib/json2.js"></script>
+  <script src="/src/lib/underscore.js"></script>
+  <script src="/src/lib/backbone-min.js"></script>
+</head>
+<body>
+
+<h1>使用backbone</h1>
+
+<input type="submit" value="this is a button">
+
+<ul>
+<li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident, aspernatur.</li>
+
+</ul>
+
+
+<script>
+  // $(function(){
+  //   var User = Backbone.Model.extend({
+  //     defaults : {
+  //       name : 'tom'
+  //     }
+  //   });
+  //   var View = Backbone.View.extend({
+  //     initialize : function(){
+  //       console.log("initialize",this.model.get('name'));
+  //       this.listenTo( this.model , 'change' , this.show );  // 当与这个view绑定的model数据发生变化的时候，调用show方法
+  //     },
+  //     show : function(model){ // 向页面中输出信息
+  //       $('body').append( '<div>'+ this.model.get('name')+ '</br>也可以通过参数调用</br>' + model.get('name') +'</div>' );
+  //     }
+  //   });
+  //   var toma = new User;
+  //   var view = new View({model:toma});    // 创建view实体
+  //   setTimeout(function(){
+  //     toma.set('name','jack');  // 修改数据
+  //   }, 3000);    // 3秒后修改数据，触发show
+  // });
+
+    console.log('------------------------')
+    Backbone.sync = function(method, model) {
+      console.log(method + ": " + JSON.stringify(model));
+      model.set('id', 1);   // 模型的特殊属性
+    };
+    var Book = Backbone.Model.extend({
+      defaults:{
+        title: "The Rough Riders",
+        author: "Theodore Roosevelt"
+      }
+    });
+    var b = new Book;
+    b.save();    // create: {"title":"The Rough Riders","author":"Theodore Roosevelt"}
+    b.save({author: "Teddy"}); // update: {"title":"The Rough Riders","author":"Teddy","id":1}
+
+
+    console.log('------------------------')
+    var BodyView = Backbone.View.extend({
+      el : $('body'), // 如果没有指定el，el就会是个空div
+      events : {
+        'click input' : 'sayHello', // 点击input的时候调用sayHello方法
+        'mouseover li' : 'moveLi'// 鼠标悬浮li标签的时候调用moveLi方法
+      },
+      sayHello : function(){
+        console.log("Hello");
+      },
+      moveLi : function(){
+        console.log("mouseover li");
+      }
+    });
+    var view = new BodyView;
+
+
+</script>
+
+
+</body>
+</html>
