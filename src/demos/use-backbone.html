@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用backbone</title>
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src="//cdn.bootcss.com/json2/20150503/json2.min.js"></script>
+  <script src="//cdn.bootcss.com/backbone.js/1.2.3/backbone.js"></script>
+
+</head>
+<body>
+
+<h1>使用backbone</h1>
+
+<script>
+    var tom = new Backbone.Model({'name':'tom'});  // 创建学生tom
+    var peter = new Backbone.Model({'name':'peter'}); // 创建学生peter
+
+    var students = new Backbone.Collection(); // tom和peter都是学生
+    students.add( tom );    // 向Collection中添加学生
+    students.add( peter );
+
+    console.log( JSON.stringify(students) ); //[{"name":"tom"},{"name":"peter"}]
+
+
+    console.log('------------------------')
+    var User = Backbone.Model.extend({
+    sayHello : function(){  //实例方法
+      console.log("hello");
+        }
+    },
+    {
+    sayWorld : function(){  //静态方法
+      console.log("world");
+        }
+    });
+    var tom = new User; // 创建一个用户
+    tom.sayHello(); // 调用用户的实例方法
+    User.sayWorld(); // 直接调用Model的静态方法
+
+
+    console.log('------------------------')
+    var User = Backbone.Model.extend({
+      defaults : {    // 默认属性，但是子类也会继承
+        "name": "tom"
+      },
+      sayHello : function(){  // 父类的方法
+        console.log("hello");
+      }
+    });
+    var ChildUser = User.extend({   // ChildUser 继承自User
+      sayChild : function(){  // 子类的方法
+        console.log("child");
+      }
+    }); 
+    var child = new ChildUser;  // 创建ChildUser实例
+    child.sayHello();    // 子类继承父类sayHello()方法
+    child.sayChild();    // 子类自己的方法
+    console.log(child.get("name"));  // 子类继承父类属性
+</script>
+</body>
+</html>
