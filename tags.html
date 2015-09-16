@@ -2,13 +2,14 @@
 layout: default
 title: 标签
 ---
+<div class="index">
 <h3>标签：</h3>
 
 <div ms-controller="pages">
 
   <hr>
 
-  <div id="tags">
+  <div id="tags" class="tags">
     {% for tag in site.tags %}
     <a href="/tags.html?tag={{ tag[0] }}"> {{ tag[0] }}</a>
     {% endfor %}
@@ -22,6 +23,7 @@ title: 标签
     </li>
 
   </ul>
+</div>
 </div>
 <script src="/src/lib/avalon.min.js"></script>
 <script>
