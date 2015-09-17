@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>使用backbone</title>
+    <script src="/src/lib/jquery.js"></script>
+    <script src="/src/lib/json2.js"></script>
+    <script src="/src/lib/underscore.js"></script>
+    <script src="/src/lib/backbone-min.js"></script>
+    <script src="/src/lib/backbone.localStorage.js"></script>
+    <style>
+    #person {
+        width: 200px;
+        height: 200px;
+        color: white;
+        background-color: #0055aa;
+    }
+    
+    input {
+        width: 300px;
+        height: 30px;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+
+<body>
+
+   <div>
+       <input type = text id = "addStudentIpt" placeholder="在此输入学生姓名，按Enter进行添加"/>
+     </div><br>
+     <div id = "studentList">
+         <!--这里是所有新同学的列表-->
+     </div>
+
+<script type="text/template" id="person-template">
+    <div class="oneStudent">
+        你好， 我叫
+        <%= name %>!
+    </div>
+</script>
+<!--==========核心代码======================-->
+<script>
+/*
+ * 模型：学生
+ */
+var Student = Backbone.Model.extend({
+    //设置学生的属性
+    defaults: {
+        name: "stone",
+        age: "10"
+    }
+});
+
+/*
+ * 集合： 学生集 
+ */
+var Students = Backbone.Collection.extend({
+    //学生集合中的模型为学生
+    model: Student,
+    //使用LocalStorage来保存数据
+    localStorage: new Backbone.LocalStorage("msg-backbone")
+});
+
+/*
+ * 视图： 单个学生视图
+ */
+var StudentView = Backbone.View.extend({
+    className: 'one',
+    template: _.template($("#person-template").html()),
+    initialize: function() {
+
+    },
+    render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    }
+});
+
+/*
+ * 视图： 全局视图
+ */
+var AppView = Backbone.View.extend({
+    el: 'body',
+    initialize: function() {
+        //获取jquery对象
+        this.input = this.$("#addStudentIpt");
+        this.studentList = this.$("#studentList");
+
+        //实例化集合（学生集）
+        this.students = new Students();
+
+        //添加监听事件
+        this.listenTo(this.students, 'add', this.showNewStudent);
+
+        //获取添加后保存的学生信息
+        this.students.fetch();
+    },
+    //事件代理
+    events: {
+        "keypress #addStudentIpt": "addStudent"
+    },
+    //向集合里添加新同学
+    addStudent: function(e) {
+        if (e.keyCode === 13) {
+            var stdName = this.input.val();
+            //使用集合创建新学生，会出发add事件
+            this.students.create({
+                name: stdName
+            });
+        }
+    },
+    //在界面上显示添加的新同学,参数student为 this.students集合中的一个模型
+    showNewStudent: function(student) {
+        var view = new StudentView({
+            model: student
+        });
+        this.studentList.append(view.render().el);
+    }
+
+});
+
+var view = new AppView;
+</script>
+</body>
+
+</html>
