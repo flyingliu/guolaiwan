@@ -10,6 +10,8 @@
     <script src="/src/lib/backbone-min.js"></script>
     <script src="/src/lib/backbone.localStorage.js"></script>
     <style>
+    body { padding:30px;margin:0;font:14px/2 arial;}
+    h1 { font:bold 18px arial;}
     #person {
         width: 200px;
         height: 200px;
@@ -20,19 +22,19 @@
     input {
         width: 300px;
         height: 30px;
-        border-radius: 5px;
     }
     </style>
 </head>
 
 <body>
 
+    <h1>便利贴</h1>
+
    <div>
        <input type = text id = "addStudentIpt" placeholder="在此输入学生姓名，按Enter进行添加"/>
-     </div><br>
-     <div id = "studentList">
-         <!--这里是所有新同学的列表-->
-     </div>
+   </div>
+   <br>
+   <div id = "studentList"> <!--这里是所有新同学的列表--> </div>
 
 <script type="text/template" id="person-template">
     <div class="oneStudent">
@@ -67,7 +69,7 @@ var Students = Backbone.Collection.extend({
  * 视图： 单个学生视图
  */
 var StudentView = Backbone.View.extend({
-    className: 'one',
+    tagName: 'li',
     template: _.template($("#person-template").html()),
     initialize: function() {
 
