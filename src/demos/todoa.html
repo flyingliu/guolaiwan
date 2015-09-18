@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>使用backbone</title>
+    <script src="/src/lib/jquery.js"></script>
+    <script src="/src/lib/json2.js"></script>
+    <script src="/src/lib/underscore.js"></script>
+    <script src="/src/lib/backbone-min.js"></script>
+    <script src="/src/lib/backbone.localStorage.js"></script>
+    <style>
+    body { padding:30px;margin:0;font:14px/2 arial;}
+    h1 { font:bold 18px arial;}
+    #todo {
+        width: 200px;
+        height: 200px;
+        color: white;
+        background-color: #0055aa;
+    }
+    
+    input {
+        width: 300px;
+        height: 30px;
+        padding:0 10px;
+    }
+    </style>
+</head>
+
+<body>
+
+    <h1>便利贴</h1>
+
+   <div>
+       <input type = text id = "addTodoIpt" placeholder="输入要做的事情吧"/>
+   </div>
+   <br>
+   <ol id = "todoList"> <!--这里是所有新同学的列表--> </ol>
+
+<script type="text/template" id="todo-template">
+
+        <span><%= title%></span>
+        <span class="removeItem">X</span>
+
+</script>
+<!--==========核心代码======================-->
+<script>
+
+
+
+var Todo = Backbone.Model.extend({
+    defaults: {
+        title: "stone",
+        order: "1",
+        status: false
+    }
+});
+
+
+var Todos = Backbone.Collection.extend({
+    model: Todo,
+    localStorage: new Backbone.LocalStorage("mytodo-backbone")
+});
+
+/*
+ * 视图： 单个事情视图
+ */
+
+var TodoView = Backbone.View.extend({
+    tagName: 'li',
+    template: _.template($('#todo-template').html()),
+    initialize:function(){},
+    events: {
+        "click .removeItem"   : "removeItem"
+    },
+    removeItem: function(){
+        console.log(1);
+    },
+    render: function() {
+        this.$el.toggleClass('done',this.model.get('status'));
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
+    }
+})
+
+var AppView = Backbone.View.extend({
+    el:'body',
+    initialize: function() {
+        this.input = this.$('#addTodoIpt');
+        this.todoList = this.$('#todoList');
+        this.todos = new Todos();
+        this.listenTo(this.todos,'add',this.showNewTodo);
+        this.todos.fetch();
+    },
+    events: {
+        "keypress #addTodoIpt": "addTodo",
+
+    },
+    addTodo: function(e) {
+        if (e.keyCode != 13) return;
+        var title = this.input.val();
+        this.todos.create({
+            title:title
+        });
+    },
+
+    showNewTodo: function(todo) {
+        var view = new TodoView({
+            model:todo
+        });
+        this.todoList.append(view.render().el);
+    }
+})
+
+var app = new AppView;
+
+
+
+
+</script>
+</body>
+
+</html>
