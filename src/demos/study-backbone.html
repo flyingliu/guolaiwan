@@ -34,24 +34,31 @@
        <input type = text id = "addStudentIpt" placeholder="在此输入学生姓名，按Enter进行添加"/>
    </div>
    <br>
-   <div id = "studentList"> <!--这里是所有新同学的列表--> </div>
+   <ol id = "studentList"> <!--这里是所有新同学的列表--> </ol>
 
 <script type="text/template" id="person-template">
-    <div class="oneStudent">
-        你好， 我叫
-        <%= name %>!
-    </div>
+
+
+        <span>${name}</span>
+        <span class="removeItem">X</span>
+
+
 </script>
 <!--==========核心代码======================-->
 <script>
+_.templateSettings = {
+   interpolate : /\$\{(.+?)\}/g
+};
+
 /*
  * 模型：学生
  */
 var Student = Backbone.Model.extend({
     //设置学生的属性
+    //status为2时显示，1时半显示，0为逻辑删除
     defaults: {
         name: "stone",
-        age: "10"
+        status: 2
     }
 });
 
@@ -101,7 +108,8 @@ var AppView = Backbone.View.extend({
     },
     //事件代理
     events: {
-        "keypress #addStudentIpt": "addStudent"
+        "keypress #addStudentIpt": "addStudent",
+        "click .removeItem": "removeItem"
     },
     //向集合里添加新同学
     addStudent: function(e) {
@@ -109,10 +117,16 @@ var AppView = Backbone.View.extend({
             var stdName = this.input.val();
             //使用集合创建新学生，会出发add事件
             this.students.create({
-                name: stdName
+                name: stdName,
+                status: 2
             });
         }
     },
+
+    removeItem: function(){
+        console.log(1);
+    },
+
     //在界面上显示添加的新同学,参数student为 this.students集合中的一个模型
     showNewStudent: function(student) {
         var view = new StudentView({
