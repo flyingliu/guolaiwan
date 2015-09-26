@@ -21,11 +21,11 @@ Hugo官方主页：[https://gohugo.io/](https://gohugo.io/)
     hugo new site /path/site
 
 三. 进入site目录就可以看到如下目录结构了。
-    ▸ archetypes/
-    ▸ content/
-    ▸ layouts/
-    ▸ static/
-      config.toml
+    archetypes/
+    content/
+    layouts/
+    static/
+    config.toml
 
 简要介绍一下，config.toml是网站的配置文件，这是一个TOML文件，全称是Tom’s Obvious, Minimal Language，这是它的作者GitHub联合创始人Tom Preston-Werner 觉得YAML不够优雅，捣鼓出来的一个新格式。如果你不喜欢这种格式，你可以将config.toml替换为YAML格式的config.yaml，或者json格式的config.json。hugo都支持。
 
@@ -81,3 +81,24 @@ OK,大功告成了，现在可以启用浏览器查看了。
 -  [Menus](https://gohugo.io/extras/menus/)
 -  [Template Variables](https://gohugo.io/templates/variables/)
 -  [Hosting on GitHub Pages](https://gohugo.io/tutorials/github-pages-blog/)
+
+# Hugo发布时要注意的地方
+
+1. 生产环境和开发环境的区别，server命令不加参数`baseUrl`时输出的链接全是localhost:1313的绝对地址，所以push前需要删除public文件夹，然后`hugo -t themeName`就行了；如果配置文件制定了theme,那么直觉 `hugo` 命令就行了。
+
+2. front-matter内容中url的值最好符合Jekyll的格式，这与config.toml中的permalinks相关联，详细设置在 [http://gohugo.io/content/organization/](http://gohugo.io/content/organization/)
+
+3. post的md文件编码必须是utf-8的，要不乱码
+
+分享个cmd文件`hugo-n`用于快速新建一篇博文()
+
+    ```
+    rem 用法：`hugo-n a-post-title-without-ext-md`
+    @echo off
+    for /f "tokens=1-3 delims=/ " %%a in ('date /t') do (set mydate=%%a-%%b-%%c)
+    set postname=post\%mydate%-%1.md
+    if exist content\%postname% (
+    echo 文件已存在，按任意键退出 & pause>nul & exit ) else (
+    hugo new %postname%
+    gvim content\%postname% )
+    ```
