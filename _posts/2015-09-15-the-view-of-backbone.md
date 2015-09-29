@@ -4,7 +4,7 @@ title: Backbone中的View
 tags: [backbone]
 ---
 
-# {{page.title}}
+
 
 [本页demo](/src/demos/view.html)
 

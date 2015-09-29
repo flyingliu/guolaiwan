@@ -3,7 +3,6 @@ layout: default
 title: jekyll常用命令
 ---
 
-### jekyll中文文档
 
 [jekyll中文文档](http://jekyll.bootcss.com/docs/usage/)
 

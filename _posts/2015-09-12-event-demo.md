@@ -4,7 +4,6 @@ title: 点击事件绑定Demo
 tags: [demo]
 ---
 
-# {{page.title}}
 
 <div class="action1"> 这是一个 .action1 的类，我上面有一个点击事件:action1 </div>
 <div class="act"> 这是一个 .act 的类，我上面有一个点击事件:act</div>

@@ -4,7 +4,7 @@ title: 使用Backbone
 tags: [backbone]
 ---
 
-# {{page.title}}
+
 
 [本文代码demo](/src/demos/use-backbone.html)
 

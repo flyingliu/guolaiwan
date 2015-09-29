@@ -4,7 +4,7 @@ title: 趣谈 JavaScript 中的 ASI (Automatic Semicolon Insertion)
 tags: [javascript]
 ---
 
-# {{page.title}}
+
 
 自动分号插入 (automatic semicolon insertion, ASI) 是一种程序解析技术，它在 JavaScript 程序的语法分析 (parsing) 阶段起作用。
 

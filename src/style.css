@@ -1,6 +1,7 @@
 body { padding-top: 50px;font:14px/1.8 arial;}
 
 .index {padding: 40px 15px;}
+.index .title { display: none;}
 .index ul { text-align:left; padding:10px 0; list-style:none;}
 .index ul li span  { color:#ccc;}
 .index ul li a  { position: relative;;padding:0 0 0 10px;}

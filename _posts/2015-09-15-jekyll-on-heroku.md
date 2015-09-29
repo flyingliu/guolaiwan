@@ -4,7 +4,6 @@ title: 在heroku上建立jekyll静态网站
 tags: [jekyll,heroku]
 ---
 
-# {{page.title}}
 
 [heroku](https://www.heroku.com) 是一个非常受欢迎的站点托管服务商，而且提供比较稳定的免费服务。jekyll是一个使用广泛的静态站点管理工具，且github上的静态页面就是用的jekyll来发布的。其实直接在github上建静态站点也是一个不错的主意，现实情况是github经常被墙。这是一个灰常的国度！
 

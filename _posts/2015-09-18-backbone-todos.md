@@ -4,7 +4,6 @@ title: Backbone例子todos
 tags: [backbone,demo]
 ---
 
-# {{page.title}}
 
 这个例子发现原来太经典了，增删改查都有了。
 

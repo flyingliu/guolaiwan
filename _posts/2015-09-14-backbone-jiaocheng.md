@@ -4,7 +4,7 @@ title: Backbone.js 简易入门教程
 tags: [backbone]
 ---
 
-# {{page.title}}
+
 
 因为最近的工作中使用到了backbone.js框架，所以在网上找了些资料，但是关于这个框架的中文资料实在是太少了，没有办法，只好自己翻译了壹篇简单的入门教材。如果翻译得不好，请大家口下留情。另外，大家也可以签出 [Agility.js](http://agilityjs.com/) 的代码，它也是壹个用于替代Backbone.js的壹个简单框架。
 
