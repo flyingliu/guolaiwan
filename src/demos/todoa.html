@@ -76,13 +76,14 @@ var todos = new Todos;
 var TodoView = Backbone.View.extend({
     tagName: 'li',
     template: _.template($('#todo-template').html()),
-    initialize:function(){},
+    initialize:function(){
+        this.listenTo(this.model, 'destroy', this.remove);
+    },
     events: {
-        "click .removeItem"   : "removeItem",
-        "tap .done": "showthis"
+        "click .removeItem"   : "removeItem"
     },
     removeItem: function(){
-        console.log(1);
+        this.model.destroy();
     },
     showthis: function(e){
         console.log(e);
