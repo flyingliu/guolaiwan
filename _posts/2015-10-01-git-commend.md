@@ -82,7 +82,8 @@ git命令用得不是很熟，备份下。
 
 Git中从远程的分支获取最新的版本到本地有这样2个命令：
 
-1. git fetch：相当于是从远程获取最新版本到本地，不会自动merge
+1. git fetch：相当于是从远程获取最新版本到本地，不会自动merge.
+
 
     git fetch origin master
     git log -p master..origin/master
@@ -99,6 +100,7 @@ Git中从远程的分支获取最新的版本到本地有这样2个命令：
 从远程获取最新的版本到本地的test分支上,之后再进行比较合并
 
 2. `git pull`：相当于是从远程获取最新版本并merge到本地
+
 
     git pull origin master
 
