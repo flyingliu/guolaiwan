@@ -17,3 +17,4 @@ body { padding-top: 50px;font:14px/1.8 arial;}
 .article table td {border:1px solid #ccc;}
 
 .ms-controller { visibility: hidden;}
+table td { padding:.5em 1em;}
