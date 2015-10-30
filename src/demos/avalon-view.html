@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="/src/lib/avalon.mobile.js"></script>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <style>
+            .box{
+                width:200px;
+                height: 200px;
+                background: #ea9e00;
+                float:left;
+                color:#000;
+                margin:20px;
+                margin-bottom:20px;
+
+                -webkit-touch-callout: none;
+                user-select: none;
+                -moz-user-select:none;
+                -webkit-user-select: none;
+            }
+
+        </style>
+        <script>
+
+            avalon.ready(function() {
+
+                avalon.define({
+                   $id: "test",
+                   array: "a,b,c,d,e,f,g".split(",")
+                });
+
+
+
+                avalon.scan()
+            })
+
+
+        </script>
+
+    </head>
+
+
+
+   <body ms-controller="test">
+
+        <ul ms-each-item="array">
+            <li ms-click="$remove" ms-if="$index % 2 == 0">{{ item }} --- {{$index}}</li>
+        </ul>
+
+       
+        <script type="text/javascript">
+
+
+
+        </script>
+    </body>
+</html>
+
