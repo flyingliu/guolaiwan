@@ -8,6 +8,7 @@ body { padding-top: 50px;font:14px/1.8 arial;}
 .index ul li a:before {content:'»';margin-left:-5px; position: absolute;left:5px;}
 .index h3 {font:bold 18px/2 arial; margin:0;}
 .index h3 a { color:#333;}
+img {max-width: 100%;}
 
 .tags a { display: inline-block; border:1px solid #ddd; padding:2px 20px; margin:5px 0;}
 
