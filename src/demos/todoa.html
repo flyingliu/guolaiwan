@@ -21,18 +21,21 @@
         background-color: #0055aa;
     }
     
-    input {
+    #addTodoIpt {
         width: 300px;
         height: 30px;
         padding:0 10px;
     }
+
+    #todoList {}
+    #todoList li .edit { display: none;}
+    #todoList li.editing .edit { display: block;}
+    #todoList li.editing .view { display: block;}
+
     </style>
 </head>
 
 <body>
-
-    <h1>便利贴</h1>
-
    <div>
        <input type = text id = "addTodoIpt" placeholder="输入要做的事情吧"/>
    </div>
@@ -40,10 +43,11 @@
    <ol id = "todoList"> <!--这里是所有新同学的列表--> </ol>
 
 <script type="text/template" id="todo-template">
-
+    <div class="view">
         <span><%= title%></span>
         <span class="removeItem">X</span>
-
+    </div>
+    <input class="edit" type="text" value="<%- title %>" />
 </script>
 <!--==========核心代码======================-->
 <script>
@@ -104,12 +108,11 @@ $(function(){
     var AppView = Backbone.View.extend({
         el:'body',
         initialize: function() {
+            console.log(this);
             this.input = this.$('#addTodoIpt');
             this.todoList = this.$('#todoList');
-            this.todos = new TodoList();
-            this.listenTo(this.todos,'add',this.showNewTodo);
-
-            this.todos.fetch();
+            this.listenTo(Todos,'add',this.showNewTodo);
+            Todos.fetch();
 
         },
         events: {
@@ -119,7 +122,7 @@ $(function(){
         addTodo: function(e) {
             if (e.keyCode != 13) return;
             var title = this.input.val();
-            this.todos.create({
+            Todos.create({
                 title:title
             });
         },
