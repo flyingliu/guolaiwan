@@ -6,6 +6,14 @@
 </head>
 <body>
 	<input type="tel">
-	<a href="sms:18721273452?body=999"> 发送</a>
+	<a noclick="sendmsg()"> 发送</a>
+
+	<script>
+		function sendmsg (argument) {
+			alert('1');
+			location.href = 'sms:18721273452?body=999'
+		}
+
+	</script>
 </body>
 </html>
