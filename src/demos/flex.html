@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+		.box {
+			border: 1px solid red;
+			display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+			display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+		}
+		.item {
+			height: 100px;
+			background: green;
+			-webkit-box-flex: 1.0;
+			-webkit-flex-grow: 1;
+			border: 3px solid #fff;
+			font:50px/2 arial;
+			color:#fff;
+			text-align: center;
+		}
+		.item:first-child {
+			width: 100px;
+			background: yellow;
+			-webkit-box-flex: 0;/* 老版本语法 QQ浏览器 */
+			flex-grow: 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>flex兼容QQ浏览器语法</h1>
+
+	<div class="box">
+		<div class="item">a</div>
+		<div class="item">b</div>
+		<div class="item">c</div>
+		<div class="item">d</div>
+		<div class="item">e</div>
+	</div>
+</body>
+</html>

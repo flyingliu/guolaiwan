@@ -3,15 +3,46 @@
 <head>
 	<meta charset="UTF-8">
 	<title>发送手机短信</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<style>
+		body,textarea,input,p { box-sizing:border-box; }
+		textarea { width:100%;}
+		input { width:100%;}
+	</style>
 </head>
 <body>
-	<input type="tel">
-	<a onclick="sendmsg()"> 发送</a>
+	<h1>手机短信发送</h1>
+	<hr>
+	<p><textarea name="content" id="content" rows="10"></textarea></p>
+	<p><input type="tel" id="tel" placeholder="发送手机号码"></p>
+	<hr>
+	<button onclick="sendmsg()">发送短信</button>
 
 	<script>
+
+
+		var browser = {
+			versions: function () {
+				var u = navigator.userAgent, app = navigator.appVersion;
+				return {
+					ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端 
+					android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器 
+					iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器 
+					iPad: u.indexOf('iPad') > -1, //是否iPad 
+				}
+			}(),
+		}
+
+		var link = browser.versions.Android ? '?' : '&'
+
 		function sendmsg (argument) {
-			alert('1');
-			location.href = 'sms:18721273452?body=999'
+			var content = document.getElementById('content')
+			var tel = document.getElementById('tel')
+			var msg = content.value
+			var mp = tel.value
+			var url = 'sms:'+ mp + link + 'body='+ msg
+			alert(url);
+			window.location.href = url
 		}
 
 	</script>
