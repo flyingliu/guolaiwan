@@ -7,14 +7,15 @@
 </head>
 <body>
 
-  <ul>
-    <li>button link1</li>
-    <li>button link2</li>
-    <li>BUTTON link3</li>
-    <li>dafsd</li>
-    <li><a href="">BUTTON link4</a></li>
-    <li><a href="">BUTTON LINK4LINK4</a></li>
-  </ul>
+<button data-hook="nav-menu-toggle">Toggle Nav Menu</button>
+<nav data-hook="nav-menu">
+<ul>
+<li><a href="/">West Philadelphia</a></li>
+<li><a href="/cab">Cab Whistling</a></li>
+<li><a href="/throne">Throne Sitting</a></li>
+</ul>
+</nav>
+
 
   
   <button id="btn"><div>点击我试试看</div></button>
@@ -30,7 +31,9 @@
     btn.trigger('clicka',['a','b','c']); // a,b,c  
   })(jQuery);
 
-
+$('[data-hook="nav-menu-toggle"]').on('click',function(){
+$('[data-hook="nav-menu"]').toggle();
+});
 
   </script>
 </body>

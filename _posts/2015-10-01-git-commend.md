@@ -108,6 +108,11 @@ Git中从远程的分支获取最新的版本到本地有这样2个命令：
 
 在实际使用中，git fetch更安全一些,因为在merge前，我们可以查看更新情况，然后再决定是否合并.
 
+三. 删除远程分支与本地分支
+
+    git branch -D :branch-name      //删除本地分支   
+    git push origin :branch-name    //删除远程分支
+
 ------
 
 # 小贴士
