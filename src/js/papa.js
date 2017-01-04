@@ -4,7 +4,7 @@ $(function(argument) {
     Papa.parse(url, {
         download: true,
         complete:function(data){
-            var data = data[0].data;
+            var data = data.data;
             store("data",data);
             console.log("isOk");
         }
