@@ -5,7 +5,7 @@ $(function(argument) {
         download: true,
         complete:function(data){
             var data = data.data;
-            store("data",data);
+            store.set("data",data);
             console.log("isOk");
         }
         // rest of config ...
