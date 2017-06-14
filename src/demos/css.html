@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css变量</title>
+    <style>
+         :root {
+            --c: blue;
+            --r: red;
+            --background: #fff;
+            --a: alert("------");
+        }
+        
+        body {
+            background: var(--background);
+        }
+        
+        h1 {
+            color: var(--c);
+        }
+        
+        h1+p {
+            color: var(--r);
+        }
+        
+        @media screen and (max-width: 768px) {
+             :root {
+                --c: pink;
+                --r: green;
+                --background: #fff;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>this is title!</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti ipsa in magni tenetur magnam vel, voluptate voluptas commodi nesciunt sequi.</p>
+
+
+    <script>
+        // document.body.style.setProperty('--c', '#7F583F');
+        var cstyle = document.styleSheets[0].rules[0].style;
+        var c = cstyle.getPropertyValue('--c').trim();
+        console.log("is-", c);
+        var at = cstyle.getPropertyValue('--a').trim();
+
+        (function() {
+            at;
+            eval(at);
+            console.log("is-", at);
+        })()
+    </script>
+</body>
+
+</html>
