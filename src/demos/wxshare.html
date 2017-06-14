@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>微信分享</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script type="text/javascript">
+    $(function ready(argument) {
+
+
+        function Share() {}
+        var funs = Share.prototype;
+        var DEFAULE_OPTION = {
+            url: "http://weixin.duc.cn/getWeixinJsToken",
+            title: "数联中国",
+            link: location.href,
+            imgUrl: "http://static.duc.cn/icon1.png",
+            desc: "Hi，孤夜观天象，发现一个不错的西西，分享一下下 ;-)",
+            token: "weixin3",
+            debug: false,
+            success: undefined,
+            cancel: undefined,
+            error: undefined
+        };
+
+        funs.init = function(options) {
+            var _this = this;
+            DEFAULE_OPTION.title = options.name;
+            DEFAULE_OPTION.desc = options.content;
+            DEFAULE_OPTION.imgUrl = options.logo;
+            this.options = $.extend(DEFAULE_OPTION, options);
+            if (typeof define === 'function' && define.amd) {
+                // AMD
+                require(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js'], wxFn);
+            } else {
+                $.getScript("http://res.wx.qq.com/open/js/jweixin-1.0.0.js", wxFn);
+            }
+
+            function wxFn(wx) {
+                if (!(typeof define === 'function' && define.amd)) {
+                    wx = window.wx;
+                }
+                $.ajax({
+                    url: _this.options.url + "?token=" + _this.options.token + "&url=" + encodeURIComponent(_this.options.link),
+                    dataType: "jsonp",
+                    success: function(data) {
+                        wx.config({
+                            debug: _this.options.debug, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                            appId: data.appId, // 必填，公众号的唯一标识
+                            timestamp: data.timestamp, // 必填，生成签名的时间戳
+                            nonceStr: data.noncestr, // 必填，生成签名的随机串
+                            signature: data.signature, // 必填，签名，见附录1
+                            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                        });
+                    }
+                });
+
+                wx.error(function(res) {
+                    logger.warn(JSON.stringify(res));
+
+                    if (typeof _this.options.error === "function") {
+                        _this.options.error();
+                    }
+                });
+
+                wx.ready(function() {
+                    wx.onMenuShareTimeline({
+                        title: _this.options.title,
+                        link: _this.options.link,
+                        imgUrl: _this.options.imgUrl,
+                        success: _this.options.success,
+                        cancel: _this.options.cancel
+                    });
+
+                    wx.onMenuShareAppMessage({
+                        title: _this.options.title,
+                        link: _this.options.link,
+                        imgUrl: _this.options.imgUrl,
+                        desc: _this.options.desc,
+                        success: _this.options.success,
+                        cancel: _this.options.cancel
+                    });
+
+                    wx.onMenuShareQQ({
+                        title: _this.options.title,
+                        link: _this.options.link,
+                        imgUrl: _this.options.imgUrl,
+                        desc: _this.options.desc,
+                        success: _this.options.success,
+                        cancel: _this.options.cancel
+                    });
+
+                    wx.onMenuShareWeibo({
+                        title: _this.options.title,
+                        link: _this.options.link,
+                        imgUrl: _this.options.imgUrl,
+                        desc: _this.options.desc,
+                        success: _this.options.success,
+                        cancel: _this.options.cancel
+                    });
+                });
+            }
+        };
+
+        var share = new Share({
+            name:"标题",
+            content:"呢哦荣",
+            logo:"http://guolaiwan.com/src/images/this2.jpg"
+
+        })
+    })
+    </script>
+</head>
+
+<body>
+    <h1>微信分享</h1>
+    <img src="http://guolaiwan.com/src/images/this2.jpg" alt="">
+</body>
+
+</html>
