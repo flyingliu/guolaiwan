@@ -11,3 +11,4 @@ $(function(argument) {
         // rest of config ...
     })
 })
+
